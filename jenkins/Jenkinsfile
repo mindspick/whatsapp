@@ -13,7 +13,7 @@ pipeline {
   }
 
   environment {
-    REPO_URL = 'https://github.com/mohit-mindspick/whatsapp.git'
+    REPO_URL = 'https://github.com/mindspick/whatsapp.git'
     GIT_CRED = 'github-pat'
     AWS_REGION = 'ap-south-1'         // fallback only
     BUILD_SCRIPT = 'jenkins/build.sh'
