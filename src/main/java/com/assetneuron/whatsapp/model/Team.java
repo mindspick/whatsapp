@@ -1,5 +1,7 @@
 package com.assetneuron.whatsapp.model;
 
+import org.hibernate.annotations.BatchSize;
+
 import com.assetneuron.whatsapp.common.persistence.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +47,7 @@ public class Team extends BaseEntity {
     @Builder.Default
     private boolean active = true;
 
+    @BatchSize(size = 20)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "team_members",

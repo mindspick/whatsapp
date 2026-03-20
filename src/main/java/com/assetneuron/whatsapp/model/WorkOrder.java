@@ -1,4 +1,5 @@
 package com.assetneuron.whatsapp.model;
+import org.hibernate.annotations.BatchSize;
 
 import com.assetneuron.whatsapp.common.persistence.BaseEntity;
 import com.assetneuron.whatsapp.converter.WorkOrderStatusConverter;
@@ -94,9 +95,11 @@ public class WorkOrder extends BaseEntity {
     @Convert(converter = WorkOrderStatusConverter.class)
     @Builder.Default
     private WorkOrderStatus status = WorkOrderStatus.OPEN;
+    @BatchSize(size = 20)
 
     @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
+    @BatchSize(size = 20)
 
     @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WorkOrderPart> workOrderParts;

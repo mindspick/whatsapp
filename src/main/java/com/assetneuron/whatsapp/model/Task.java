@@ -1,4 +1,5 @@
 package com.assetneuron.whatsapp.model;
+import org.hibernate.annotations.BatchSize;
 
 import com.assetneuron.whatsapp.common.persistence.BaseEntity;
 import jakarta.persistence.CascadeType;
@@ -73,6 +74,7 @@ public class Task extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "work_order_id", nullable = false)
     private WorkOrder workOrder;
+    @BatchSize(size = 20)
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChecklistItem> checklistItems;
