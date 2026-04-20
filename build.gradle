@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.3.3'
 	id 'io.spring.dependency-management' version '1.1.5'
 	id 'jacoco'
+    id 'org.sonarqube' version '5.1.0.4882'
 }
 
 group = 'com.assetneuron'
@@ -87,4 +88,26 @@ jacocoTestCoverageVerification {
             }
         }
     }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", System.getenv("SONAR_PROJECT_KEY") ?: "whatsapp"
+        property "sonar.projectName", "whatsapp"
+        property "sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "http://localhost:9000/"
+        property "sonar.token", System.getenv("SONAR_TOKEN") ?: "sqa_ce975c17936a917273de734396f8404fb9c88b84"
+
+        // Required for SonarCloud organizations (set via CI/local env)
+        def sonarOrganization = System.getenv("SONAR_ORGANIZATION")
+        if (sonarOrganization) {
+            property "sonar.organization", sonarOrganization
+        }
+
+        property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+    }
+}
+
+tasks.named("sonar") {
+    dependsOn tasks.test
+    dependsOn tasks.jacocoTestReport
 }
