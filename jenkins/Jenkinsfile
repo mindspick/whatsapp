@@ -86,6 +86,16 @@ pipeline {
       }
     }
 
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_AUTH_TOKEN')]) {
+            sh './gradlew test jacocoTestReport sonar --no-daemon -Dsonar.token=$SONAR_AUTH_TOKEN'
+          }
+        }
+      }
+    }
+
     stage('Build & Push Image') {
       steps {
         script {
